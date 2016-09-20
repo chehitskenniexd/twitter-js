@@ -57,3 +57,23 @@ code {
 .content .by {
   font-weight: bold;
 }
+
+.tweetClass {
+    margin: 10px;
+}
+
+.tweetName a {
+    color: #000;
+}
+
+.tweetClass .tweetName {
+    font-weight: bold;
+}
+
+.tweetClass .tweetContent {
+    text-indent: 2.5em;
+}
+
+.tweetClass li{
+    list-style: none;
+}

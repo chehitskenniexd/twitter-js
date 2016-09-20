@@ -15,11 +15,25 @@
     
       <!-- display tweets here -->
       {% for tweet in tweets %}
-        <li>{{tweet.content}}</li>
+      <div class='tweetClass'>
+        <li class='tweetName'><a href="/users/{{tweet.name}}">{{tweet.name}}</a></li>
+        <li class='tweetContent'>{{tweet.content}}</li>
+      </div>
       {% endfor %}
       
     </div>
   </div>
-    
+{% if showForm %}
+  <form action="/tweets" method="POST">
+    <label for="name_field">Name:</label>
+    <input name="name" type="text" id="name_field" />
+
+    <label for="text_field">Text:</label>
+    <input name="text" type="text" id="text_field" style="width: 350px;" />
+
+    <input type="submit" value="Submit" />
+  </form>
+{% endif %}
+
 {% endblock %}
 Raw

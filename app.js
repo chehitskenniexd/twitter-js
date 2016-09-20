@@ -2,11 +2,14 @@ var Express = require('express');
 var volleyball = require('volleyball');
 var nunjucks = require('nunjucks');
 var routes = require('./routes');
+var bodyParser = require('body-parser');
 
 const logger = volleyball.custom({ debug: true })
 
 var app = new Express();
 app.use(logger);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', routes);
 
 nunjucks.configure('views', { noCache: true }); // point nunjucks to the proper directory for templates
