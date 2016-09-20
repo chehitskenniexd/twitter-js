@@ -7,22 +7,24 @@ var path = require('path');
 
 router.use(express.static('public'));
 
-router.get('/', function (req, res) {
-    var tweets = tweetBank.list();
-    res.render('index', { tweets: tweets, showForm: true });
-});
+module.exports = function (io) {
+    router.get('/', function (req, res) {
+        var tweets = tweetBank.list();
+        res.render('index', { tweets: tweets, showForm: true });
+    });
 
-router.get('/users/:name', function (req, res) {
-    var name = req.params.name;
-    var tweets = tweetBank.find({ name: name });
-    res.render('index', { tweets: tweets });
-});
+    router.get('/users/:name', function (req, res) {
+        var name = req.params.name;
+        var tweets = tweetBank.find({ name: name });
+        res.render('index', { tweets: tweets, isUser: true, showForm: true , tweet: name});
+    });
 
-router.post('/tweets', function (req, res) {
-    var name = req.body.name;
-    var text = req.body.text;
-    tweetBank.add(name, text);
-    res.redirect('/');
-});
+    router.post('/tweets', function (req, res) {
+        var name = req.body.name;
+        var text = req.body.text;
+        tweetBank.add(name, text);
+        res.redirect('/users/' + name);
+    });
 
-module.exports = router;
+    return router;
+};

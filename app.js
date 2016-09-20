@@ -3,6 +3,7 @@ var volleyball = require('volleyball');
 var nunjucks = require('nunjucks');
 var routes = require('./routes');
 var bodyParser = require('body-parser');
+var socketio = require('socket.io');
 
 const logger = volleyball.custom({ debug: true })
 
@@ -10,7 +11,7 @@ var app = new Express();
 app.use(logger);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/', routes);
+app.use('/', routes(io));
 
 nunjucks.configure('views', { noCache: true }); // point nunjucks to the proper directory for templates
 app.set('view engine', 'html'); // have res.render work with html files
@@ -35,4 +36,5 @@ app.get('/special', function (req, res, next) {
     res.send('Fullstack Academy Part 2');
 });
 
-app.listen(3000);
+var server = app.listen(3000);
+var io = socketio.listen(server);
